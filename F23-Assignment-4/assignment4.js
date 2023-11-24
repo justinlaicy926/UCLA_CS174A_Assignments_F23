@@ -54,6 +54,9 @@ export class Assignment4 extends Scene {
 
         this.initial_camera_location = Mat4.look_at(vec3(0, 10, 20), vec3(0, 0, 0), vec3(0, 1, 0));
 
+        this.box1_transform = Mat4.identity().times(Mat4.translation(-2, 0, 0, 0));
+        this.box2_transform = Mat4.identity().times(Mat4.translation(2, 0, 0, 0));
+
         this.rotate = false;
         this.box1_rotate = Mat4.identity();
         this.box2_rotate = Mat4.identity();
@@ -86,19 +89,17 @@ export class Assignment4 extends Scene {
 
         this.shapes.box_2.arrays.texture_coord = this.shapes.box_2.arrays.texture_coord.map(x => x.times(2));
 
-        this.box1_transform = Mat4.identity().times(Mat4.translation(-2, 0, 0, 0));
-        this.box2_transform = Mat4.identity().times(Mat4.translation(2, 0, 0, 0));
-
         //fix: toggle back to rotate
         if (this.rotate){
             //20 rmp = 40 pi/min = 2/3 pi/sec
-            this.box1_rotate = (Mat4.rotation(Math.PI*2/3*t, 1, 0, 0));
+            this.box1_rotate = (Mat4.rotation(Math.PI*2/3*dt, 1, 0, 0));
             //30 rpm = 60 pi/min = 1 pi/sec
-            this.box2_rotate = (Mat4.rotation(Math.PI*t, 0, 1, 0));
+            this.box2_rotate = (Mat4.rotation(Math.PI*dt, 0, 1, 0));
+            this.box1_transform = this.box1_transform.times(this.box1_rotate);
+            this.box2_transform = this.box2_transform.times(this.box2_rotate);
         }
 
-        this.box1_transform = this.box1_transform.times(this.box1_rotate);
-        this.box2_transform = this.box2_transform.times(this.box2_rotate);
+
 
         this.shapes.box_1.draw(context, program_state, this.box1_transform, this.materials.stars);
         this.shapes.box_2.draw(context, program_state, this.box2_transform, this.materials.earth);
