@@ -131,7 +131,7 @@ class Texture_Scroll_X extends Textured_Phong {
                                       vec4(0., 0., 1., 0.), 
                                       vec4(-t, 0., 0., 1.)); 
 
-                vec4 tex_coord = vec4(f_tex_coord, 0., 0.) + vec4(2., 2., 0., 2.); 
+                vec4 tex_coord = vec4(f_tex_coord, 0., 0.) + vec4(2., 2., 0., 1.); 
                 tex_coord = transform * tex_coord; 
 
                 vec4 tex_color = texture2D(texture, tex_coord.xy);
